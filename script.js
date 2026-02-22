@@ -25,133 +25,123 @@ document.addEventListener("DOMContentLoaded", function () {
     var interview = 0;
     var rejected = 0;
 
-    for (var i = 0; i < jobs.length; i++) {
-      if (jobs[i].status === "Interview") interview++;
-      if (jobs[i].status === "Rejected") rejected++;
-    }
+    jobs.forEach(job => {
+      if (job.status === "Interview") interview++;
+      if (job.status === "Rejected") rejected++;
+    });
 
     allCount.innerText = total;
     interviewCount.innerText = interview;
     rejectedCount.innerText = rejected;
 
-    if (currentTab === "All") {
-      tabCount.innerText = total + " Jobs";
-    } else {
-      var count = 0;
-      for (var j = 0; j < jobs.length; j++) {
-        if (jobs[j].status === currentTab) count++;
-      }
-      tabCount.innerText = count + " Jobs";
-    }
+    var visible = jobs.filter(j => currentTab === "All" || j.status === currentTab);
+    tabCount.innerText = visible.length + " Jobs";
   }
 
   function showJobs() {
 
     container.innerHTML = "";
+    var visible = jobs.filter(j => currentTab === "All" || j.status === currentTab);
 
-    for (var i = 0; i < jobs.length; i++) {
-
-      if (currentTab === "All" || jobs[i].status === currentTab) {
-
-        var card = document.createElement("div");
-        card.className = "bg-gray-50 p-6 rounded shadow hover:shadow-lg transition";
-
-        card.innerHTML = `
-          <div class="flex justify-between items-center">
-            <h3 class="font-bold text-lg">
-              ${jobs[i].position} at ${jobs[i].company}
-            </h3>
-
-            <span class="px-3 py-1 text-xs font-semibold rounded-full shadow-sm tracking-wide
-              ${jobs[i].status === "Interview" ? "bg-green-100 text-green-600" : ""}
-              ${jobs[i].status === "Rejected" ? "bg-red-100 text-red-600" : ""}
-              ${jobs[i].status === "All" ? "bg-gray-200 text-gray-600" : ""}
-            ">
-              ${jobs[i].status}
-            </span>
-          </div>
-
-          <p class="text-gray-600 mt-2">
-            ${jobs[i].location} | ${jobs[i].salary}
-          </p>
-
-          <div class="mt-4 flex gap-3">
-
-            <button 
-              class="px-4 py-2 bg-gray-200 rounded hover:bg-green-500 hover:text-white transition"
-              onclick="setInterview(${jobs[i].id})">
-              Interview
-            </button>
-
-            <button 
-              class="px-4 py-2 bg-gray-200 rounded hover:bg-red-500 hover:text-white transition"
-              onclick="setRejected(${jobs[i].id})">
-              Rejected
-            </button>
-
-            <button 
-              class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 transition"
-              onclick="deleteJob(${jobs[i].id})">
-              Delete
-            </button>
-
-          </div>
-        `;
-
-        container.appendChild(card);
-      }
+    if (visible.length === 0) {
+      container.innerHTML = `
+        <div class="col-span-full text-center py-16 text-gray-300">
+          <div class="text-6xl mb-4">📭</div>
+          <p class="text-xl font-semibold">No jobs found</p>
+          <p class="text-sm mt-2">There are no jobs in this category.</p>
+        </div>
+      `;
+      updateCount();
+      return;
     }
+
+    visible.forEach(job => {
+
+      var card = document.createElement("div");
+
+      card.className =
+        "bg-slate-800/70 border border-slate-700 p-6 rounded-xl shadow-xl hover:shadow-indigo-500/20 hover:scale-105 transition duration-300";
+
+      card.innerHTML = `
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="text-lg font-bold text-white">
+            ${job.position}
+          </h3>
+
+          <span class="px-3 py-1 text-xs rounded-full font-semibold
+            ${job.status === "Interview" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-400/30" : ""}
+            ${job.status === "Rejected" ? "bg-rose-500/20 text-rose-400 border border-rose-400/30" : ""}
+            ${job.status === "All" ? "bg-gray-600/30 text-gray-300 border border-gray-500/30" : ""}
+          ">
+            ${job.status}
+          </span>
+        </div>
+
+        <p class="text-indigo-300 font-medium">
+          ${job.company}
+        </p>
+
+        <p class="text-gray-400 text-sm mt-1">
+          ${job.location} • ${job.salary}
+        </p>
+
+        <div class="mt-5 flex gap-3">
+
+          <button onclick="setInterview(${job.id})"
+            class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition">
+            Interview
+          </button>
+
+          <button onclick="setRejected(${job.id})"
+            class="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white transition">
+            Rejected
+          </button>
+
+          <button onclick="deleteJob(${job.id})"
+            class="px-4 py-2 rounded-lg bg-slate-600 hover:bg-slate-500 text-white transition">
+            Delete
+          </button>
+
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
 
     updateCount();
   }
 
   window.setInterview = function (id) {
-    for (var i = 0; i < jobs.length; i++) {
-      if (jobs[i].id === id) {
-        jobs[i].status = "Interview";
-      }
-    }
+    jobs.find(j => j.id === id).status = "Interview";
     showJobs();
   };
 
   window.setRejected = function (id) {
-    for (var i = 0; i < jobs.length; i++) {
-      if (jobs[i].id === id) {
-        jobs[i].status = "Rejected";
-      }
-    }
+    jobs.find(j => j.id === id).status = "Rejected";
     showJobs();
   };
 
   window.deleteJob = function (id) {
-    var newJobs = [];
-    for (var i = 0; i < jobs.length; i++) {
-      if (jobs[i].id !== id) {
-        newJobs.push(jobs[i]);
-      }
-    }
-    jobs = newJobs;
+    jobs = jobs.filter(j => j.id !== id);
     showJobs();
   };
 
-  var tabs = document.querySelectorAll(".tab-btn");
-
-  for (var i = 0; i < tabs.length; i++) {
-    tabs[i].addEventListener("click", function () {
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
 
       currentTab = this.dataset.tab;
 
-      for (var j = 0; j < tabs.length; j++) {
-        tabs[j].classList.remove("bg-blue-500", "text-white");
-        tabs[j].classList.add("bg-gray-200");
-      }
+      document.querySelectorAll(".tab-btn").forEach(b => {
+        b.classList.remove("bg-indigo-600");
+        b.classList.add("bg-white/20");
+      });
 
-      this.classList.add("bg-blue-500", "text-white");
-      this.classList.remove("bg-gray-200");
+      this.classList.add("bg-indigo-600");
+      this.classList.remove("bg-white/20");
 
       showJobs();
     });
-  }
+  });
 
   showJobs();
 

@@ -2,53 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Job Tracker</title>
-
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+<body class="bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-800 min-h-screen text-white">
 
-  <div class="w-full max-w-6xl p-6">
+  <div class="max-w-6xl mx-auto py-16 px-6">
 
-    <header class="mb-10">
-      <h1 class="text-3xl font-bold mb-6 text-center">Job Application Tracker</h1>
+    <!-- Header -->
+    <h1 class="text-4xl font-bold text-center mb-12 tracking-wide">
+      Job Application Tracker
+    </h1>
 
-      <div class="flex flex-wrap justify-center gap-6">
-        <div class="bg-white shadow p-6 rounded w-44 text-center">
-          <p class="text-gray-500">All Jobs</p>
-          <p id="allCount" class="text-2xl font-bold">0</p>
-        </div>
+    <!-- Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
 
-        <div class="bg-white shadow p-6 rounded w-44 text-center">
-          <p class="text-gray-500">Interview</p>
-          <p id="interviewCount" class="text-2xl font-bold">0</p>
-        </div>
-
-        <div class="bg-white shadow p-6 rounded w-44 text-center">
-          <p class="text-gray-500">Rejected</p>
-          <p id="rejectedCount" class="text-2xl font-bold">0</p>
-        </div>
+      <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl text-center shadow-lg">
+        <p class="text-gray-300">All Jobs</p>
+        <p id="allCount" class="text-3xl font-bold mt-2">0</p>
       </div>
-    </header>
-    <section class="bg-white p-6 rounded shadow">
+
+      <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl text-center shadow-lg">
+        <p class="text-gray-300">Interview</p>
+        <p id="interviewCount" class="text-3xl font-bold mt-2 text-emerald-400">0</p>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl text-center shadow-lg">
+        <p class="text-gray-300">Rejected</p>
+        <p id="rejectedCount" class="text-3xl font-bold mt-2 text-rose-400">0</p>
+      </div>
+
+    </div>
+
+    <!-- Job Section -->
+    <div class="bg-white/10 backdrop-blur-md p-8 rounded-xl shadow-xl">
+
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-semibold">Available Jobs</h2>
-        <p id="tabCount" class="text-gray-600">0 Jobs</p>
+        <p id="tabCount" class="text-gray-300">0 Jobs</p>
       </div>
-      <div class="flex gap-4 mb-6">
-        <button class="tab-btn px-4 py-2 bg-blue-500 text-white rounded" data-tab="All">All</button>
-        <button class="tab-btn px-4 py-2 bg-gray-200 rounded" data-tab="Interview">Interview</button>
-        <button class="tab-btn px-4 py-2 bg-gray-200 rounded" data-tab="Rejected">Rejected</button>
-      </div>
-      
-      <div id="jobContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
 
-    </section>
+      <!-- Tabs -->
+      <div class="flex gap-4 mb-8">
+        <button class="tab-btn px-5 py-2 rounded-lg bg-indigo-600 text-white transition"
+          data-tab="All">All</button>
+        <button class="tab-btn px-5 py-2 rounded-lg bg-white/20 hover:bg-white/30 transition"
+          data-tab="Interview">Interview</button>
+        <button class="tab-btn px-5 py-2 rounded-lg bg-white/20 hover:bg-white/30 transition"
+          data-tab="Rejected">Rejected</button>
+      </div>
+
+      <!-- Jobs -->
+      <div id="jobContainer" class="grid md:grid-cols-2 gap-6"></div>
+
+    </div>
+
   </div>
 
-  <script src="script.js" defer></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
