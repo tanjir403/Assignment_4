@@ -1,14 +1,78 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   var jobs = [
-    { id: 1, company: "Google", position: "Frontend Developer", location: "Mountain View", salary: "$120k", status: "All" },
-    { id: 2, company: "Amazon", position: "Backend Developer", location: "Seattle", salary: "$110k", status: "All" },
-    { id: 3, company: "Facebook", position: "UI Designer", location: "Menlo Park", salary: "$100k", status: "All" },
-    { id: 4, company: "Netflix", position: "DevOps Engineer", location: "Los Gatos", salary: "$130k", status: "All" },
-    { id: 5, company: "Tesla", position: "Product Manager", location: "Palo Alto", salary: "$140k", status: "All" },
-    { id: 6, company: "Microsoft", position: "Data Analyst", location: "Redmond", salary: "$115k", status: "All" },
-    { id: 7, company: "Adobe", position: "Graphic Designer", location: "San Jose", salary: "$105k", status: "All" },
-    { id: 8, company: "Spotify", position: "Mobile Developer", location: "New York", salary: "$125k", status: "All" }
+    { 
+      id: 1, 
+      company: "Google", 
+      position: "Frontend Developer", 
+      location: "Mountain View", 
+      salary: "$120k", 
+      status: "All",
+      description: "Build responsive user interfaces using modern JavaScript frameworks and optimize performance for millions of users."
+    },
+    { 
+      id: 2, 
+      company: "Amazon", 
+      position: "Backend Developer", 
+      location: "Seattle", 
+      salary: "$110k", 
+      status: "All",
+      description: "Develop scalable APIs and manage cloud-based microservices handling high traffic systems."
+    },
+    { 
+      id: 3, 
+      company: "Facebook", 
+      position: "UI Designer", 
+      location: "Menlo Park", 
+      salary: "$100k", 
+      status: "All",
+      description: "Design intuitive and visually engaging interfaces focused on user experience and accessibility."
+    },
+    { 
+      id: 4, 
+      company: "Netflix", 
+      position: "DevOps Engineer", 
+      location: "Los Gatos", 
+      salary: "$130k", 
+      status: "All",
+      description: "Automate deployment pipelines and maintain cloud infrastructure for global streaming services."
+    },
+    { 
+      id: 5, 
+      company: "Tesla", 
+      position: "Product Manager", 
+      location: "Palo Alto", 
+      salary: "$140k", 
+      status: "All",
+      description: "Lead cross-functional teams to deliver innovative electric vehicle software solutions."
+    },
+    { 
+      id: 6, 
+      company: "Microsoft", 
+      position: "Data Analyst", 
+      location: "Redmond", 
+      salary: "$115k", 
+      status: "All",
+      description: "Analyze large datasets to generate insights that drive business and product decisions."
+    },
+    { 
+      id: 7, 
+      company: "Adobe", 
+      position: "Graphic Designer", 
+      location: "San Jose", 
+      salary: "$105k", 
+      status: "All",
+      description: "Create compelling digital designs and branding materials for global creative products."
+    },
+    { 
+      id: 8, 
+      company: "Spotify", 
+      position: "Mobile Developer", 
+      location: "New York", 
+      salary: "$125k", 
+      status: "All",
+      description: "Develop high-performance mobile applications delivering seamless music streaming experiences."
+    }
   ];
 
   var currentTab = "All";
@@ -60,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
       var card = document.createElement("div");
 
       card.className =
-        "bg-slate-800/70 border border-slate-700 p-6 rounded-xl shadow-xl hover:shadow-indigo-500/20 hover:scale-105 transition duration-300";
+        "bg-slate-800/80 border border-slate-700 p-6 rounded-xl shadow-xl hover:shadow-indigo-500/20 hover:scale-105 transition duration-300";
 
       card.innerHTML = `
         <div class="flex justify-between items-center mb-3">
@@ -83,6 +147,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <p class="text-gray-400 text-sm mt-1">
           ${job.location} • ${job.salary}
+        </p>
+
+        <!-- 🔥 Description Added -->
+        <p class="text-gray-300 text-sm mt-3 leading-relaxed">
+          ${job.description}
         </p>
 
         <div class="mt-5 flex gap-3">
